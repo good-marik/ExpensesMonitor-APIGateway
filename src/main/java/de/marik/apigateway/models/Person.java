@@ -16,16 +16,12 @@ public class Person {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-//	@NotBlank(message = "Your name should not be empty")
-//	@Size(min = 1, max = 100, message = "Your name should not be longer than 100 symbols")
-//	private String name;
-
-	@NotBlank(message = "Username should not be empty")
-	@Size(min = 1, max = 100, message = "Username should not be longer than 100 symbols")
+//	@NotBlank(message = "Username should not be empty")
+	@Size(min = 1, max = 100, message = "Username should be between 1 and 100 symbols long")
 	private String username;
 
 	// TODO: validation for a plain password here
-	@NotBlank(message = "Your password should not be empty")
+	@NotBlank(message = "Password should not be empty")
 	private String password;
 
 	public Person(String username, String password) {
@@ -38,9 +34,9 @@ public class Person {
 	}
 
 	// for testing ONLY. Should be deleted afterwards!
-	public Person(String username) {
-		this.username = username;
-	}
+//	public Person(String username) {
+//		this.username = username;
+//	}
 
 	public int getId() {
 		return id;

@@ -17,7 +17,7 @@ public class PersonService {
 	public PersonService(PersonRepository personRepository) {
 		this.personRepository = personRepository;
 	}
-	
+
 	public Optional<Person> getPersonByUsername(String username) {
 		return personRepository.findByUsername(username);
 	}

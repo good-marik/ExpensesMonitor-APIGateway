@@ -11,8 +11,8 @@ import de.marik.apigateway.models.Person;
 import de.marik.apigateway.services.PersonService;
 
 @Component
-public class PersonValidator implements Validator{
-	
+public class PersonValidator implements Validator {
+
 	private final PersonService personService;
 
 	@Autowired
@@ -31,7 +31,5 @@ public class PersonValidator implements Validator{
 		Optional<Person> personInDB = personService.getPersonByUsername(person.getUsername());
 		if (personInDB.isPresent())
 			errors.rejectValue("username", "", "A person with such username already exists! (my validator)");
-		
 	}
-
 }

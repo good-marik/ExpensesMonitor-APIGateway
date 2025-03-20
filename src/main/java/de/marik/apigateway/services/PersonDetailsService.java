@@ -13,9 +13,9 @@ import de.marik.apigateway.security.PersonDetails;
 
 @Service
 public class PersonDetailsService implements UserDetailsService {
-	
+
 	private final PersonRepository personRepository;
-	
+
 	public PersonDetailsService(PersonRepository personRepository) {
 		this.personRepository = personRepository;
 	}
@@ -23,7 +23,8 @@ public class PersonDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Optional<Person> person = personRepository.findByUsername(username);
-		if(person.isEmpty()) throw new UsernameNotFoundException("User was not found! :(((");
+		if (person.isEmpty())
+			throw new UsernameNotFoundException("User was not found! :(((");
 		return new PersonDetails(person.get());
 	}
 }

@@ -31,21 +31,17 @@ public class SecurityConfig {
 			.requestMatchers("/auth/login", "/auth/registration", "/error").permitAll()
 			.anyRequest().authenticated())
 //			.anyRequest().hasAnyRole("USER", "ADMIN"))
-		
 //			.formLogin(withDefaults())
 			.formLogin(login -> login.loginPage("/auth/login")
 				.loginProcessingUrl("/process_login")
-				.defaultSuccessUrl("/test", true)
+				.defaultSuccessUrl("/hello", true)
 				.failureUrl("/auth/login?error"))
 //			.httpBasic(withDefaults())
-
-			.csrf(csrf -> csrf.disable())
-			
+//			.csrf(csrf -> csrf.disable())
 			.logout(out -> out.logoutUrl("/logout")
 				.logoutSuccessUrl("/auth/login"));
 		return http.build();
 	}
-	
 
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(personDetailsService).passwordEncoder(getPasswordEncoder());

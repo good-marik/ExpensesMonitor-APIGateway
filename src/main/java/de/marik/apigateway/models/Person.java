@@ -11,33 +11,32 @@ import jakarta.validation.constraints.Size;
 @Entity
 @Table(name = "Person")
 public class Person {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@NotBlank(message = "Your name should not be empty")
-	@Size(min = 1, max = 100, message = "Your name should not be longer than 100 symbols")
-	private String name;
-	
+
+//	@NotBlank(message = "Your name should not be empty")
+//	@Size(min = 1, max = 100, message = "Your name should not be longer than 100 symbols")
+//	private String name;
+
 	@NotBlank(message = "Username should not be empty")
 	@Size(min = 1, max = 100, message = "Username should not be longer than 100 symbols")
 	private String username;
-	
-	//TODO: validation for a plain password here
+
+	// TODO: validation for a plain password here
 	@NotBlank(message = "Your password should not be empty")
 	private String password;
-	
-	public Person(String name, String username, String password) {
-		this.name = name;
+
+	public Person(String username, String password) {
 		this.username = username;
 		this.password = password;
 	}
-	
+
 	// is really needed for Spring?
 	public Person() {
 	}
-	
+
 	// for testing ONLY. Should be deleted afterwards!
 	public Person(String username) {
 		this.username = username;
@@ -49,14 +48,6 @@ public class Person {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getUsername() {

@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -21,9 +22,14 @@ public class Person {
 	private String username;
 
 	// TODO: validation for a plain password here
-	@NotBlank(message = "Password should not be empty")
+	//@NotBlank(message = "Password should not be empty")
+	@Size(min = 4, max = 100, message = "Password should be at least 4 symbols long")
 	private String password;
 
+	
+	@Transient
+	private String passwordRepeat;
+	
 	public Person(String username, String password) {
 		this.username = username;
 		this.password = password;
@@ -60,5 +66,13 @@ public class Person {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getPasswordRepeat() {
+		return passwordRepeat;
+	}
+
+	public void setPasswordRepeat(String passwordRepeat) {
+		this.passwordRepeat = passwordRepeat;
 	}
 }

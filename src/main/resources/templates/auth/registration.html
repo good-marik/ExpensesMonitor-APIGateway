@@ -18,6 +18,10 @@
 		<div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
 		<p/>
 		
+		<label for="passwordRepeat">Repeat your password: </label> 
+		<input type="password" th:field="*{passwordRepeat}" id="passwordRepeat" /> 
+		<p/>
+		
 		<button>Sign up!</button>
 		
 	</form>

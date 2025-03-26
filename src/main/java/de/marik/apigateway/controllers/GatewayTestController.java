@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import de.marik.apigateway.security.PersonDetails;
 
 @Controller
-public class APIGatewayController {
+public class GatewayTestController {
 
 	@GetMapping("/hello")
 	public String test(Model model) {

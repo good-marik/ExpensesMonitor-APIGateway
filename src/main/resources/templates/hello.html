@@ -7,8 +7,19 @@
 
 <body>
 	<h1 th:text="'Privet, ' + ${person.getUsername()} + '!!!'"></h1>
+
+	<a href="/showExpenses">show Expenses for the User</a>
+	<p>
+		<a href="/newExpenses">new Expenses for the User</a>
 	<form th:action="@{/logout}" th:method="POST">
 		<button>logout!</button>
 	</form>
+
+	<script>
+		window.onload = function() {
+			alert("Warning-Warning! :)");
+		};
+	</script>
+
 </body>
 </html>

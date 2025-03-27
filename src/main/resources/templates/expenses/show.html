@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>My Expenses</title>
+	<link rel="stylesheet" href="/css/dark.css">
+</head>
+<body>
+	<h2 th:text="${person.getUsername()}"></h2>
+	<hr>
+	<div th:each="expenses : ${expensesList}">
+		<br>
+		<p class="tab1" th:text="${expenses.toString()}"></p>
+	</div>
+</body>
+</html>

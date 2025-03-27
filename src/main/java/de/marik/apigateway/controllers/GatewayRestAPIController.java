@@ -7,10 +7,12 @@ import java.util.Map;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import de.marik.apigateway.dto.ExpensesDTO;
@@ -36,11 +38,11 @@ public class GatewayRestAPIController {
 	@GetMapping("/newExpenses")
 	public String addExpenses() {
 		Person person = getAuthentPerson();
-
+		
 		// for testing, later from forms!
 		ExpensesDTO expenses = new ExpensesDTO();
 		expenses.setAmount(1234.56);
-		expenses.setComment("Alpha");
+		expenses.setComment("Beta");
 		expenses.setDate(LocalDate.now());
 		expenses.setOwnerIdentity(person.getId());
 		System.out.println(expenses);
@@ -58,10 +60,21 @@ public class GatewayRestAPIController {
 		RestTemplate restTemplate = new RestTemplate();
 		String url = dataServerURL + "/api/addExpenses";
 
-		// change to postForEntity and work with errors!
-		String response = restTemplate.postForObject(url, request, String.class);
-		System.out.println("DataServer responded: " + response);
-
+		
+		try {
+			ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
+			System.out.println("DataServer responded: " + response);
+			System.out.println("-".repeat(20));
+			System.out.println("Status Code: " + response.getStatusCode());
+			System.out.println("Headers: " + response.getHeaders());
+			System.out.println("Response Body: " + response.getBody());
+			System.out.println("-".repeat(20));
+			return (response.getBody());
+		} catch (RestClientException e) {
+			System.out.println("BAD REQUEST ".repeat(3));
+			System.out.println(e.getMessage());
+			return(e.getMessage());
+		}
 
 //		some examples
 		
@@ -77,7 +90,7 @@ public class GatewayRestAPIController {
 //            System.out.println(e.getMessage());
 //        }
 
-		return response;
+		
 	}
 
 	private Person getAuthentPerson() {

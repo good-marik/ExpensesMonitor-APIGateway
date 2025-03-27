@@ -20,6 +20,20 @@ hr {
 	border: 1px solid #333;
 }
 
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+}
+    th {
+    color: yellow;
+}
+
 button {
 	background-color: #1f1f1f;
 	color: #e0e0e0;

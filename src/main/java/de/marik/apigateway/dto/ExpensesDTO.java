@@ -4,16 +4,20 @@ import java.time.LocalDate;
 
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public class ExpensesDTO {
 
-	//@DecimalMin(value = "0.0", message = "expenses should be a positive number")
+	@DecimalMin(value = "0.0", message = "amount should be a positive number")
 	private double amount; // or replace with Double?
 
+	@NotNull(message = "date should not be empty")
 	@Temporal(TemporalType.DATE)
 	private LocalDate date;
 
-	//@Size(max = 250, message = "too long comment!")
+	@Size(max = 250, message = "purpose should not be longer than 250 symbols")
 	private String comment;
 
 	private int ownerIdentity;

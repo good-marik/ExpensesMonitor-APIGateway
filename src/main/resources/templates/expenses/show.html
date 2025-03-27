@@ -7,10 +7,41 @@
 </head>
 <body>
 	<h2 th:text="${person.getUsername()}"></h2>
+	
+	<form action="/create"> 
+		<button>add new</button>
+	</form>
+	
 	<hr>
-	<div th:each="expenses : ${expensesList}">
-		<br>
-		<p class="tab1" th:text="${expenses.toString()}"></p>
-	</div>
+	
+	<form th:action="@{/logout}" th:method="POST">
+		<button>logout</button>
+	</form>
+	
+	
+	<hr>
+	
+	<h2>My Expenses List</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Comment</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="expenses : ${expensesList}">
+                <td th:text="${expenses.amount}"></td>
+                <td th:text="${expenses.date}"></td>
+                <td th:text="${expenses.comment}"></td>
+                <td th:text="edit"></td>
+                <td th:text="delete"></td>
+            </tr>
+        </tbody>
+    </table>
+	
+	<hr>
+	
 </body>
 </html>

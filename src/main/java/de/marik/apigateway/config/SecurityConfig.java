@@ -28,13 +28,13 @@ public class SecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests(auth -> auth
 //			.requestMatchers("/admin").hasRole("ADMIN")
-			.requestMatchers("/auth/login", "/auth/registration", "/error").permitAll()
+			.requestMatchers("/", "/home", "/auth/login", "/auth/registration", "/error", "/css/dark.css").permitAll()
 			.anyRequest().authenticated())
 //			.anyRequest().hasAnyRole("USER", "ADMIN"))
 //			.formLogin(withDefaults())
 			.formLogin(login -> login.loginPage("/auth/login")
 				.loginProcessingUrl("/process_login")
-				.defaultSuccessUrl("/hello", true)
+				.defaultSuccessUrl("/show", true)
 				.failureUrl("/auth/login?error"))
 //			.httpBasic(withDefaults())
 //			.csrf(csrf -> csrf.disable())

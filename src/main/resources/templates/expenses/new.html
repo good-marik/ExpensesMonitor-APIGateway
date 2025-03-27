@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>New Entry</title>
+	<link rel="stylesheet" href="/css/dark.css">
+</head>
+
+<body>
+
+	<form th:method="POST" th:action="@{/create}" th:object="${expenses}">
+		
+		<label for="amount">Amount: </label> 
+		<input type="text" th:field="*{amount}" id="amount" />
+		<div class="error" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></div>
+		<p/>
+		
+		<label for="date">Date: </label> 
+		<input type="date" th:field="*{date}" id="date" /> 
+		<div class="error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
+		<p/> 
+		
+		<label for="comment">Purpose: </label> 
+		<input type="text" th:field="*{comment}" id="comment" /> 
+		<div class="error" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></div>
+		<p/>
+		
+		<button>Add expenses!</button>
+		
+	</form>
+	
+</body>
+
+</html>

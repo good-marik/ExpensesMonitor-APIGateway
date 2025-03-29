@@ -35,8 +35,12 @@
                 <td th:text="${expenses.amount}"></td>
                 <td th:text="${expenses.date}"></td>
                 <td th:text="${expenses.comment}"></td>
-                <td th:text="edit"></td>
-                <td th:text="delete"></td>
+                <td>
+                	<a th:href="@{/edit?id={id}(id=${expenses.id})}" th:text="edit"></a>
+                </td>
+                <td>
+                	<a th:href="@{/delete?id={id}(id=${expenses.id})}" th:text="delete"></a>
+                </td>
             </tr>
         </tbody>
     </table>

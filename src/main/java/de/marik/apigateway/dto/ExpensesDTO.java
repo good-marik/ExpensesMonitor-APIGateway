@@ -9,6 +9,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class ExpensesDTO {
+	
+	private int id;
 
 	@DecimalMin(value = "0.0", message = "amount should be a positive number")
 	private double amount; // or replace with Double?
@@ -55,6 +57,14 @@ public class ExpensesDTO {
 
 	public void setOwnerIdentity(int ownerIdentity) {
 		this.ownerIdentity = ownerIdentity;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	@Override

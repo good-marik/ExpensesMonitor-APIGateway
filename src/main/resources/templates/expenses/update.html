@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8">
-	<title>New Entry</title>
-	<link rel="stylesheet" href="/css/dark.css">
+<meta charset="UTF-8">
+<title>Editing My Expenses</title>
+<link rel="stylesheet" href="/css/dark.css">
 </head>
-
 <body>
-
-	<h2>New Expenses:</h2>
-
-	<form th:method="POST" th:action="@{/create}" th:object="${expenses}">
+	<h2>Editing Expenses:</h2>
+	
+		<form th:method="PATCH" th:action="@{/update?id={id}(id=${expenses.id})}" th:object="${expenses}">
 		
 		<label for="amount">Amount: </label> 
 		<input type="text" th:field="*{amount}" id="amount" />
@@ -25,12 +23,15 @@
 		<label for="comment">Purpose: </label> 
 		<input type="text" th:field="*{comment}" id="comment" /> 
 		<div class="error" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></div>
+		
+		<input type="hidden" th:field="*{ownerIdentity}" id="ownerIdentity" />
+		
 		<p/>
 		
-		<button>Add expenses!</button>
+		<button>Update expenses!</button>
 		
 	</form>
-	
+
 </body>
 
 </html>

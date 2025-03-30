@@ -24,10 +24,11 @@ public interface ExpensesClient {
 	@PostMapping("/api/create")
 	ResponseEntity<Expenses> addExpenses(@RequestBody ExpensesDTO expensesDTO);
 	
+	@GetMapping("/api/expensesById")
+	ResponseEntity<ExpensesDTO> getExpensesById(@RequestParam int id);
+	
 	//TODO: proper response here!
 	@PostMapping("/api/updateExpenses")
 	void updateExpenses(@RequestBody ExpensesDTO expensesDTO);
 	
-	@GetMapping("/api/getExpensesById")
-	ExpensesDTO getExpensesById(@RequestParam int id);
 }

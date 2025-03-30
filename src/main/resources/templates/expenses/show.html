@@ -36,12 +36,15 @@
                 <td th:text="${expenses.date}"></td>
                 <td th:text="${expenses.comment}"></td>
                 <td>
-                	<a th:href="@{/edit?id={id}(id=${expenses.id})}" th:text="edit"></a>
+                	<form th:method="GET" th:action="@{/edit}">
+                		<input type="hidden" name="id" th:value="${expenses.id}" />
+                		<button type="submit">edit</button>
+                	</form>
+                	
                 </td>
                 <td>
-                	<!--   <a th:href="@{/delete?id={id}(id=${expenses.id})}" th:text="delete"></a>
-                	-->
-                	<form th:method="POST" th:action="@{/delete?id={id}(id=${expenses.id})}">
+                 	<form th:method="POST" th:action="@{/delete}">
+                 	 	<input type="hidden" name="id" th:value="${expenses.id}" />
                 		<button type="submit">delete</button>
                 	</form>
                 </td>

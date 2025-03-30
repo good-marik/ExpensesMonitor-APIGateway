@@ -16,7 +16,7 @@ public class GlobalExceptionHandler {
 		return "redirect:/errors/api-down";
 	}
 	
-    @ExceptionHandler(UnexpectedErrorException.class)
+    @ExceptionHandler(UnexpectedErrorException.class)	//TODO: to Rename to APIExeption or anything similar
     public String handleUnexpectedError(UnexpectedErrorException e, RedirectAttributes redirectAttributes) {
     	System.out.println(e.getMessage());
     	redirectAttributes.addFlashAttribute("message", e.getMessage());

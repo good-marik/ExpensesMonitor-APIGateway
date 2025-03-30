@@ -68,28 +68,15 @@ public class WebController {
 		return "redirect:/show";
 	}
 
-//	@PostMapping("/create")
-//	public String createExpenses(@ModelAttribute("expenses") @Valid ExpensesDTO expensesDTO,
-//			BindingResult bindingResult) {
-////		TODO: validator here???
-//		if (bindingResult.hasErrors()) {
-//			return "expenses/new";
-//		}
-//		expensesDTO.setOwnerIdentity(getAuthentPerson().getId());
-//		System.out.println("-".repeat(60));
-//		System.out.println(expensesDTO);
-//		ResponseEntity<String> response = apiServiceClient.addExpenses(expensesDTO);
-//		System.out.println(response.toString());
-//		System.out.println("-".repeat(60));
-//		return "redirect:/show";
-//	}
-
 	@GetMapping("/edit")
 	public String editExpenses(@RequestParam int id, Model model) {
-		model.addAttribute("expenses", apiServiceClient.getExpensesById(id));
+		model.addAttribute("expenses", expensesService.getExpensesById(id));
 		return "expenses/update";
 	}
+	
+	
 
+	
 	@PatchMapping("/update")
 	public String updateExpenses(@ModelAttribute("expense") @Valid ExpensesDTO expensesDTO,
 			BindingResult bindingResult) {

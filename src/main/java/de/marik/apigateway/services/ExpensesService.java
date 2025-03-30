@@ -35,7 +35,7 @@ public class ExpensesService {
 			throw new ApiNotAvailableException();
 		ResponseEntity<ExpensesList> response = apiServiceClient.getExpensesByOwnerId(person.getId());
 		if (response.getStatusCode() != HttpStatus.OK)
-			throw new UnexpectedErrorException("The list of expenses could not be obtained from the API-server.");
+			throw new UnexpectedErrorException("API error: The list of expenses could not be obtained.");
 		return response.getBody().getExpensesList();
 	}
 	
@@ -45,7 +45,7 @@ public class ExpensesService {
 			throw new ApiNotAvailableException();
 		ResponseEntity<String> response = apiServiceClient.deleteExpenses(id);
 		if (response.getStatusCode() != HttpStatus.OK)
-			throw new UnexpectedErrorException("The requested expenses could not be deleted.");
+			throw new UnexpectedErrorException("API error: The requested expenses could not be deleted.");
 	}
 
 	@Transactional
@@ -55,7 +55,16 @@ public class ExpensesService {
 		expensesDTO.setOwnerIdentity(getAuthentPerson().getId());
 		ResponseEntity<Expenses> response = apiServiceClient.addExpenses(expensesDTO);
 		if(response.getStatusCode() != HttpStatus.CREATED)
-			throw new UnexpectedErrorException("The current expenses could not be added.");
+			throw new UnexpectedErrorException("API error: The current expenses could not be added.");
+	}
+	
+	public ExpensesDTO getExpensesById(int id) {
+		if (!apiHealthService.isApiAvailable())		//TODO: export into separate method
+			throw new ApiNotAvailableException();
+		ResponseEntity<ExpensesDTO> response = apiServiceClient.getExpensesById(id);
+		if(response.getStatusCode() != HttpStatus.OK)
+			throw new UnexpectedErrorException("API error: This expenses could not be obtained.");
+		return response.getBody();
 	}
 	
 	private Person getAuthentPerson() {

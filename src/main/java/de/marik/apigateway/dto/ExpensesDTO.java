@@ -2,24 +2,28 @@ package de.marik.apigateway.dto;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import org.hibernate.validator.constraints.NotBlank;
+
 import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 
 public class ExpensesDTO {
 	
 	private int id;
 
+	@NotNull(message = "amount should be provided")
 	@DecimalMin(value = "0.0", message = "amount should be a positive number")
-	private double amount; // or replace with Double?
+	private Double amount;
 
-	@NotNull(message = "date should not be empty")
-	@Temporal(TemporalType.DATE)
+	@NotNull(message = "date should be provided")
+	@PastOrPresent(message = "date cannot be in the future")
 	private LocalDate date;
 
-	@Size(max = 250, message = "purpose should not be longer than 250 symbols")
+	@NotEmpty(message = "some information/notice about expenses should be provided")
+	@Size(max = 250, message = "notice should not be longer than 250 symbols")
 	private String comment;
 
 	private int ownerIdentity;
@@ -27,11 +31,12 @@ public class ExpensesDTO {
 	public ExpensesDTO() {
 	}
 
-	public double getAmount() {
+	public Double getAmount() {
 		return amount;
 	}
 
-	public void setAmount(double amount) {
+
+	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
 

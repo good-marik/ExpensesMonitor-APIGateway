@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import de.marik.apigateway.dto.ExpensesDTO;
 import de.marik.apigateway.dto.ExpensesList;
+import de.marik.apigateway.models.Expenses;
 
 @FeignClient(name = "api-service", url = "http://localhost:8000")
 public interface ExpensesClient {
@@ -20,8 +21,8 @@ public interface ExpensesClient {
 	@DeleteMapping("/api/delete")
 	ResponseEntity<String> deleteExpenses(@RequestParam int id);
 	
-	@PostMapping("/api/addExpenses")
-	ResponseEntity<String> addExpenses(@RequestBody ExpensesDTO expensesDTO);
+	@PostMapping("/api/create")
+	ResponseEntity<Expenses> addExpenses(@RequestBody ExpensesDTO expensesDTO);
 	
 	//TODO: proper response here!
 	@PostMapping("/api/updateExpenses")

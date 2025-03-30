@@ -8,6 +8,15 @@
 
 <body>
 
+	<script>
+    	document.addEventListener("DOMContentLoaded", function() {
+        	let dateField = document.getElementById("date");
+        	if (!dateField.value) {
+            	dateField.value = new Date().toISOString().split('T')[0];
+        	}
+    	});
+	</script>
+
 	<h2>New Expenses:</h2>
 
 	<form th:method="POST" th:action="@{/create}" th:object="${expenses}">
@@ -18,7 +27,7 @@
 		<p/>
 		
 		<label for="date">Date: </label> 
-		<input type="date" th:field="*{date}" id="date" /> 
+		<input type="date" th:field="*{date}" id="date"/>
 		<div class="error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
 		<p/> 
 		

@@ -4,16 +4,22 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.marik.apigateway.client.ExpensesClient;
 import de.marik.apigateway.dto.ExpensesDTO;
 import de.marik.apigateway.dto.ExpensesList;
+import de.marik.apigateway.models.Expenses;
 import de.marik.apigateway.models.Person;
+import de.marik.apigateway.security.PersonDetails;
 import de.marik.apigateway.utils.ApiNotAvailableException;
 import de.marik.apigateway.utils.UnexpectedErrorException;
 
 @Service
+@Transactional(readOnly = true)
 public class ExpensesService {
 
 	private final ApiHealthService apiHealthService;
@@ -33,11 +39,27 @@ public class ExpensesService {
 		return response.getBody().getExpensesList();
 	}
 	
+	@Transactional
 	public void deleteExpenses(int id) {
 		if (!apiHealthService.isApiAvailable())
 			throw new ApiNotAvailableException();
 		ResponseEntity<String> response = apiServiceClient.deleteExpenses(id);
 		if (response.getStatusCode() != HttpStatus.OK)
 			throw new UnexpectedErrorException("The requested expenses could not be deleted.");
+	}
+
+	@Transactional
+	public void create(ExpensesDTO expensesDTO) {
+		if (!apiHealthService.isApiAvailable())		//TODO: export into separate method
+			throw new ApiNotAvailableException();
+		expensesDTO.setOwnerIdentity(getAuthentPerson().getId());
+		ResponseEntity<Expenses> response = apiServiceClient.addExpenses(expensesDTO);
+		if(response.getStatusCode() != HttpStatus.CREATED)
+			throw new UnexpectedErrorException("The current expenses could not be added.");
+	}
+	
+	private Person getAuthentPerson() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		return ((PersonDetails) authentication.getPrincipal()).getPerson();
 	}
 }

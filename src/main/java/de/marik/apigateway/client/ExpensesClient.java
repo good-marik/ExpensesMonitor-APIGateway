@@ -12,17 +12,16 @@ import de.marik.apigateway.dto.ExpensesDTO;
 import de.marik.apigateway.dto.ExpensesList;
 
 @FeignClient(name = "api-service", url = "http://localhost:8000")
-public interface ApiServiceClient {
+public interface ExpensesClient {
 	
 	@GetMapping("/api/expenses")
 	ResponseEntity<ExpensesList> getExpensesByOwnerId(@RequestParam int ownerId);
 
+	@DeleteMapping("/api/delete")
+	ResponseEntity<String> deleteExpenses(@RequestParam int id);
+	
 	@PostMapping("/api/addExpenses")
 	ResponseEntity<String> addExpenses(@RequestBody ExpensesDTO expensesDTO);
-	
-	@DeleteMapping("/api/deleteExpenses")
-	//TODO: proper response here!
-	void deleteExpenses(@RequestParam int id);
 	
 	//TODO: proper response here!
 	@PostMapping("/api/updateExpenses")

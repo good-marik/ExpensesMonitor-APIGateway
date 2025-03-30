@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import de.marik.apigateway.client.ApiServiceClient;
+import de.marik.apigateway.client.ExpensesClient;
 import de.marik.apigateway.dto.ExpensesDTO;
 import de.marik.apigateway.models.Person;
 import de.marik.apigateway.security.PersonDetails;
@@ -27,11 +27,11 @@ import jakarta.validation.Valid;
 @Controller
 public class WebController {
 
-	private final ApiServiceClient apiServiceClient;
+	private final ExpensesClient apiServiceClient;
 	private final PersonService personService;
 	private final ExpensesService expensesService;
 
-	public WebController(ApiServiceClient apiServiceClient, PersonService personService,
+	public WebController(ExpensesClient apiServiceClient, PersonService personService,
 			ExpensesService expensesService) {
 		this.apiServiceClient = apiServiceClient;
 		this.personService = personService;
@@ -40,12 +40,13 @@ public class WebController {
 
 	@GetMapping({ "/", "/home" })
 	public String getHome() {
-		return "home";		//notice: no slash for production!
+		return "home";
 	}
 
 	@GetMapping("/show")
 	public String fetchExpenses(Model model) {
-		Person person = personService.getAuthentPerson();;
+		Person person = personService.getAuthentPerson();
+		;
 		try {
 			model.addAttribute("person", person);
 			model.addAttribute("expensesList", expensesService.getExpensesList(person));
@@ -55,16 +56,24 @@ public class WebController {
 			return "redirect:/errors/api-down";
 		} catch (UnexpectedErrorException e) {
 			System.out.println(e.getMessage());
-			return "redirect:/errors/unexpectedError?message="+e.getMessage();
+			return "redirect:/errors/unexpectedError?message=" + e.getMessage();
+		}
+	}
+
+	@PostMapping("/delete")
+	public String delete(@RequestParam int id) {
+		try {
+			expensesService.deleteExpenses(id);
+			return "redirect:/show";
+		} catch (ApiNotAvailableException e) {
+			return "redirect:/errors/api-down";
+		} catch (UnexpectedErrorException e) {
+			System.out.println(e.getMessage());
+			return "redirect:/errors/unexpectedError?message=" + e.getMessage();
 		}
 	}
 	
 	
-	@GetMapping("/delete")
-	public String delete(@RequestParam int id) {
-		apiServiceClient.deleteExpenses(id);
-		return "redirect:/show";
-	}
 
 	@GetMapping("/edit")
 	public String editExpenses(@RequestParam int id, Model model) {
@@ -73,12 +82,13 @@ public class WebController {
 	}
 
 	@PatchMapping("/update")
-	public String updateExpenses(@ModelAttribute("expense") @Valid ExpensesDTO expensesDTO, BindingResult bindingResult) {
+	public String updateExpenses(@ModelAttribute("expense") @Valid ExpensesDTO expensesDTO,
+			BindingResult bindingResult) {
 		// TODO: validator here
 		if (bindingResult.hasErrors()) {
 			return "edit";
 		}
-		
+
 		System.out.println("-".repeat(60));
 		System.out.println("id for the owner = " + expensesDTO.getOwnerIdentity());
 		System.out.println("-".repeat(60));
@@ -108,7 +118,7 @@ public class WebController {
 		return "redirect:/show";
 	}
 
-	//TODO: to delete from here!
+	// TODO: to delete from here!
 	public Person getAuthentPerson() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		return ((PersonDetails) authentication.getPrincipal()).getPerson();

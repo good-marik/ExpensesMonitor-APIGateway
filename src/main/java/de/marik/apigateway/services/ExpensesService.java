@@ -39,9 +39,5 @@ public class ExpensesService {
 		ResponseEntity<String> response = apiServiceClient.deleteExpenses(id);
 		if (response.getStatusCode() != HttpStatus.OK)
 			throw new UnexpectedErrorException("The requested expenses could not be deleted.");
-		
 	}
-	
-	
-
 }

@@ -46,34 +46,16 @@ public class WebController {
 	@GetMapping("/show")
 	public String fetchExpenses(Model model) {
 		Person person = personService.getAuthentPerson();
-		;
-		try {
-			model.addAttribute("person", person);
-			model.addAttribute("expensesList", expensesService.getExpensesList(person));
-			return "expenses/show";
-		} catch (ApiNotAvailableException e) {
-			System.out.println(e.getMessage());
-			return "redirect:/errors/api-down";
-		} catch (UnexpectedErrorException e) {
-			System.out.println(e.getMessage());
-			return "redirect:/errors/unexpectedError?message=" + e.getMessage();
-		}
+		model.addAttribute("person", person);
+		model.addAttribute("expensesList", expensesService.getExpensesList(person));
+		return "expenses/show";
 	}
 
 	@PostMapping("/delete")
 	public String delete(@RequestParam int id) {
-		try {
-			expensesService.deleteExpenses(id);
-			return "redirect:/show";
-		} catch (ApiNotAvailableException e) {
-			return "redirect:/errors/api-down";
-		} catch (UnexpectedErrorException e) {
-			System.out.println(e.getMessage());
-			return "redirect:/errors/unexpectedError?message=" + e.getMessage();
-		}
+		expensesService.deleteExpenses(id);
+		return "redirect:/show";
 	}
-	
-	
 
 	@GetMapping("/edit")
 	public String editExpenses(@RequestParam int id, Model model) {

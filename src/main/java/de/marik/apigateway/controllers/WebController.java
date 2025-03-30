@@ -2,12 +2,9 @@ package de.marik.apigateway.controllers;
 
 import java.util.List;
 
-import javax.naming.Binding;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,73 +13,57 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import de.marik.apigateway.GatewayApplication;
+
 import de.marik.apigateway.client.ApiServiceClient;
-import de.marik.apigateway.config.SecurityConfig;
 import de.marik.apigateway.dto.ExpensesDTO;
 import de.marik.apigateway.models.Person;
-import de.marik.apigateway.repositories.PersonRepository;
 import de.marik.apigateway.security.PersonDetails;
-import de.marik.apigateway.services.PersonDetailsService;
+import de.marik.apigateway.services.ExpensesService;
 import de.marik.apigateway.services.PersonService;
-import de.marik.apigateway.services.RegistrationService;
-import de.marik.apigateway.util.PersonValidator;
+import de.marik.apigateway.utils.ApiNotAvailableException;
+import de.marik.apigateway.utils.UnexpectedErrorException;
 import jakarta.validation.Valid;
 
 @Controller
 public class WebController {
 
-    private final RegistrationService registrationService;
-
-    private final PasswordEncoder getPasswordEncoder;
-
-    private final SecurityConfig securityConfig;
-
-    private final GatewayApplication gatewayApplication;
-
-	private final PersonValidator personValidator;
-
-	private final AuthController authController;
-
+	private final ApiServiceClient apiServiceClient;
 	private final PersonService personService;
-	final static String dataServerURL = "http://localhost:8000";
-	private final PersonRepository personRepository;
-	private final PersonDetailsService personDetailsService;
-	private ApiServiceClient apiServiceClient;
+	private final ExpensesService expensesService;
 
-	public WebController(PersonRepository personRepository, PersonDetailsService personDetailsService,
-			ApiServiceClient apiServiceClient, PersonService personService, AuthController authController,
-			PersonValidator personValidator, GatewayApplication gatewayApplication, SecurityConfig securityConfig, PasswordEncoder getPasswordEncoder, RegistrationService registrationService) {
-		this.personRepository = personRepository;
-		this.personDetailsService = personDetailsService;
+	public WebController(ApiServiceClient apiServiceClient, PersonService personService,
+			ExpensesService expensesService) {
 		this.apiServiceClient = apiServiceClient;
 		this.personService = personService;
-		this.authController = authController;
-		this.personValidator = personValidator;
-		this.gatewayApplication = gatewayApplication;
-		this.securityConfig = securityConfig;
-		this.getPasswordEncoder = getPasswordEncoder;
-		this.registrationService = registrationService;
+		this.expensesService = expensesService;
 	}
 
 	@GetMapping({ "/", "/home" })
 	public String getHome() {
-		return "home"; // no slash for production! :)
+		return "home";		//notice: no slash for production!
 	}
 
+	@GetMapping("/show")
+	public String fetchExpenses(Model model) {
+		Person person = personService.getAuthentPerson();;
+		try {
+			model.addAttribute("person", person);
+			model.addAttribute("expensesList", expensesService.getExpensesList(person));
+			return "expenses/show";
+		} catch (ApiNotAvailableException e) {
+			System.out.println(e.getMessage());
+			return "redirect:/errors/api-down";
+		} catch (UnexpectedErrorException e) {
+			System.out.println(e.getMessage());
+			return "redirect:/errors/unexpectedError?message="+e.getMessage();
+		}
+	}
+	
+	
 	@GetMapping("/delete")
 	public String delete(@RequestParam int id) {
 		apiServiceClient.deleteExpenses(id);
 		return "redirect:/show";
-	}
-
-	@GetMapping("/show")
-	public String fetchData(Model model) {
-		Person person = getAuthentPerson();
-		List<ExpensesDTO> expensesList = apiServiceClient.getExpensesByOwnerId(person.getId()).getExpensesList();
-		model.addAttribute("person", person);
-		model.addAttribute("expensesList", expensesList);
-		return "expenses/show";
 	}
 
 	@GetMapping("/edit")
@@ -127,28 +108,10 @@ public class WebController {
 		return "redirect:/show";
 	}
 
-//	@GetMapping("/hello")
-//	public String test(Model model) {
-//		Person person = getAuthentPerson();
-//		model.addAttribute("person", person);
-//		return "hello";
-//	}
-
-//	@GetMapping("/showTemp")
-//	public String showExpenses(Model model) {
-//		Person person = getAuthentPerson();
-//		RestTemplate restTemplate = new RestTemplate();
-//		String url = dataServerURL + "/api/getExpenses?id=" + person.getId();
-//		ExpensesList response = restTemplate.getForObject(url, ExpensesList.class);
-//		List<ExpensesDTO> expensesList = response.getExpensesList();
-//		model.addAttribute("person", person);
-//		model.addAttribute("expensesList", expensesList);
-//		System.out.println(expensesList);
-//		return "expenses/show";
-//	}
-
-	private Person getAuthentPerson() {
+	//TODO: to delete from here!
+	public Person getAuthentPerson() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		return ((PersonDetails) authentication.getPrincipal()).getPerson();
 	}
+
 }

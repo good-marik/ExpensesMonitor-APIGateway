@@ -8,10 +8,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import de.marik.apigateway.config.FeignConfig;
 import de.marik.apigateway.dto.ExpensesDTO;
 import de.marik.apigateway.dto.ExpensesList;
 
-@FeignClient(name = "api-service", url = "http://localhost:8000/api")
+@FeignClient(name = "api-service", url = "http://localhost:8000/api", configuration = FeignConfig.class)
 public interface ExpensesClient {
 
 	@GetMapping("/expenses")

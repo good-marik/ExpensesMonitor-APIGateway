@@ -12,6 +12,7 @@ strong {
 	color: #ffffff;
 }
 
+
 h2 {
 	color: white;
 }
@@ -33,6 +34,12 @@ th, td {
     th {
     color: yellow;
 }
+
+form {
+    display: inline-block;
+    margin-right: 10px;
+}
+
 
 button {
 	background-color: #1f1f1f;

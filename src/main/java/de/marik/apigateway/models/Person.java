@@ -16,32 +16,26 @@ public class Person {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-//	@NotBlank(message = "Username should not be empty")
-	@Size(min = 1, max = 100, message = "Username should be between 1 and 100 symbols long")
+	@Size(min = 1, max = 30, message = "Username should be between 1 and 30 symbols long")
 	private String username;
 
-	// TODO: validation for a plain password here
-	//@NotBlank(message = "Password should not be empty")
 	@Size(min = 4, max = 100, message = "Password should be at least 4 symbols long")
 	private String password;
-
+	
+	@Size(min = 1, max = 30, message = "Name should be between 1 and 30 symbols long")
+	private String name;
 	
 	@Transient
 	private String passwordRepeat;
 	
+	//TODO: can be deleted?
 	public Person(String username, String password) {
 		this.username = username;
 		this.password = password;
 	}
 
-	// is really needed for Spring?
 	public Person() {
 	}
-
-	// for testing ONLY. Should be deleted afterwards!
-//	public Person(String username) {
-//		this.username = username;
-//	}
 
 	public int getId() {
 		return id;
@@ -74,4 +68,13 @@ public class Person {
 	public void setPasswordRepeat(String passwordRepeat) {
 		this.passwordRepeat = passwordRepeat;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 }

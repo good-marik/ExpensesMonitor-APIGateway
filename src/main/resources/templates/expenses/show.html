@@ -6,28 +6,26 @@
 	<link rel="stylesheet" href="/css/dark.css">
 </head>
 <body>
-	<h2 th:text="${person.getUsername()}"></h2>
-	
-	<form action="/create"> 
-		<button>add new</button>
-	</form>
-	
-	<hr>
+	<h1 th:text="${person.getName()}"></h1>
 	
 	<form th:action="@{/logout}" th:method="POST">
 		<button>logout</button>
 	</form>
 	
-	
 	<hr>
 	
-	<h2>My Expenses List</h2>
+	<h2>My Expenses</h2>
+	
+	<form action="/create"> 
+		<button>add new</button>
+	</form>
+    
     <table>
         <thead>
             <tr>
                 <th>Amount</th>
                 <th>Date</th>
-                <th>Comment</th>
+                <th>Purpose</th>
             </tr>
         </thead>
         <tbody>
@@ -41,8 +39,6 @@
                 		<button type="submit">edit</button>
                 	</form>
                 	
-                </td>
-                <td>
                  	<form th:method="POST" th:action="@{/delete}">
                  	 	<input type="hidden" name="id" th:value="${expenses.id}" />
                 		<button type="submit">delete</button>

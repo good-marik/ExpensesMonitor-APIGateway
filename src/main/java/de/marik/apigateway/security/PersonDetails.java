@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import de.marik.apigateway.models.Person;
 
 public class PersonDetails implements UserDetails {
-	private static final long serialVersionUID = 8312302618864819365L;
 	private final Person person;
 
 	public PersonDetails(Person person) {

@@ -1,6 +1,5 @@
 package de.marik.apigateway.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -19,7 +18,6 @@ import de.marik.apigateway.services.PersonDetailsService;
 public class SecurityConfig {
 	private final PersonDetailsService personDetailsService;
 
-	@Autowired
 	public SecurityConfig(PersonDetailsService personDetailsService) {
 		this.personDetailsService = personDetailsService;
 	}
@@ -27,10 +25,8 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests(auth -> auth
-//			.requestMatchers("/admin").hasRole("ADMIN")
-			.requestMatchers("/", "/home", "/auth/login", "/auth/registration", "/error", "/css/dark.css").permitAll()
+			.requestMatchers("/", "/home", "/auth/login", "/error", "/auth/registration", "/css/dark.css").permitAll()
 			.anyRequest().authenticated())
-//			.anyRequest().hasAnyRole("USER", "ADMIN"))
 //			.formLogin(withDefaults())
 			.formLogin(login -> login.loginPage("/auth/login")
 				.loginProcessingUrl("/process_login")
@@ -38,8 +34,8 @@ public class SecurityConfig {
 				.failureUrl("/auth/login?error"))
 //			.httpBasic(withDefaults())
 //			.csrf(csrf -> csrf.disable())
-			.logout(out -> out.logoutUrl("/logout")
-				.logoutSuccessUrl("/auth/login"));
+	        .logout(out -> out.logoutUrl("/logout")
+	        	.logoutSuccessUrl("/auth/login"));
 		return http.build();
 	}
 

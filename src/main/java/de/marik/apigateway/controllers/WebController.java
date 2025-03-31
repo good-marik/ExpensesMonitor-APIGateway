@@ -71,31 +71,17 @@ public class WebController {
 	@GetMapping("/edit")
 	public String editExpenses(@RequestParam int id, Model model) {
 		model.addAttribute("expenses", expensesService.getExpensesById(id));
+		System.out.println("Date in expensesDTO: "+ expensesService.getExpensesById(id).getDate());
 		return "expenses/update";
 	}
 	
-	
-
-	
 	@PatchMapping("/update")
-	public String updateExpenses(@ModelAttribute("expense") @Valid ExpensesDTO expensesDTO,
+	public String updateExpenses(@ModelAttribute("expenses") @Valid ExpensesDTO expensesDTO,
 			BindingResult bindingResult) {
-		// TODO: validator here
 		if (bindingResult.hasErrors()) {
-			return "edit";
+			return "expenses/update";
 		}
-
-		System.out.println("-".repeat(60));
-		System.out.println("id for the owner = " + expensesDTO.getOwnerIdentity());
-		System.out.println("-".repeat(60));
-		apiServiceClient.updateExpenses(expensesDTO);
+		expensesService.update(expensesDTO);
 		return "redirect:/show";
 	}
-
-	// TODO: to delete from here!
-	public Person getAuthentPerson() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		return ((PersonDetails) authentication.getPrincipal()).getPerson();
-	}
-
 }

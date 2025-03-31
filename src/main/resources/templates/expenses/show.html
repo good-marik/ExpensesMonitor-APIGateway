@@ -33,7 +33,7 @@
         <tbody>
             <tr th:each="expenses : ${expensesList}">
                 <td th:text="${expenses.amount}"></td>
-                <td th:text="${expenses.date}"></td>
+                <td th:text="${#temporals.format(expenses.date, 'dd-MM-yyyy')}"></td>
                 <td th:text="${expenses.comment}"></td>
                 <td>
                 	<form th:method="GET" th:action="@{/edit}">

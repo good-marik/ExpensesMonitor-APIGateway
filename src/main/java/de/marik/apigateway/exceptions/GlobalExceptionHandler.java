@@ -20,6 +20,6 @@ public class GlobalExceptionHandler {
     public String handleUnexpectedError(UnexpectedErrorException e, RedirectAttributes redirectAttributes) {
     	System.out.println(e.getMessage());
     	redirectAttributes.addFlashAttribute("message", e.getMessage());
-        return "redirect:/errors/unexpectedError";
+        return "redirect:/errors/unexpectedError";		//TODO: to rename this view accordingly, see above.
     }
 }

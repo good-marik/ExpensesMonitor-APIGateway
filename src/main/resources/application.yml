@@ -13,6 +13,7 @@ spring:
   jpa:
     properties:
       hibernate.show_sql: true
+
 #spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 
 #filter for PUT/PATCH/DELETE methods
@@ -20,6 +21,9 @@ spring:
     hiddenmethod:
       filter:
          enabled: true
+
+    format:
+      date: dd/MM/yyyy
 
 #debugging here
 temp:

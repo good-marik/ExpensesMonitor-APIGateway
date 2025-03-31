@@ -2,7 +2,6 @@ package de.marik.apigateway.util;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -15,7 +14,6 @@ public class PersonValidator implements Validator {
 
 	private final PersonService personService;
 
-	@Autowired
 	public PersonValidator(PersonService personService) {
 		this.personService = personService;
 	}

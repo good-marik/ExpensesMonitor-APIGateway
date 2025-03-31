@@ -27,8 +27,7 @@ public interface ExpensesClient {
 	@GetMapping("/api/expensesById")
 	ResponseEntity<ExpensesDTO> getExpensesById(@RequestParam int id);
 	
-	//TODO: proper response here!
-	@PostMapping("/api/updateExpenses")
-	void updateExpenses(@RequestBody ExpensesDTO expensesDTO);
+	@PostMapping("/api/update")
+	ResponseEntity<Expenses> updateExpenses(@RequestBody ExpensesDTO expensesDTO);
 	
 }

@@ -17,6 +17,7 @@ import de.marik.apigateway.models.Person;
 import de.marik.apigateway.security.PersonDetails;
 import de.marik.apigateway.utils.ApiNotAvailableException;
 import de.marik.apigateway.utils.UnexpectedErrorException;
+import jakarta.validation.Valid;
 
 @Service
 @Transactional(readOnly = true)
@@ -58,6 +59,15 @@ public class ExpensesService {
 			throw new UnexpectedErrorException("API error: The current expenses could not be added.");
 	}
 	
+	@Transactional
+	public void update(ExpensesDTO expensesDTO) {
+		if (!apiHealthService.isApiAvailable())		//TODO: export into separate method
+			throw new ApiNotAvailableException();
+		ResponseEntity<Expenses> response = apiServiceClient.updateExpenses(expensesDTO);
+		if(response.getStatusCode() != HttpStatus.OK)
+			throw new UnexpectedErrorException("API error: The given expenses could not be updated.");
+	}
+
 	public ExpensesDTO getExpensesById(int id) {
 		if (!apiHealthService.isApiAvailable())		//TODO: export into separate method
 			throw new ApiNotAvailableException();
@@ -71,4 +81,5 @@ public class ExpensesService {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		return ((PersonDetails) authentication.getPrincipal()).getPerson();
 	}
+	
 }

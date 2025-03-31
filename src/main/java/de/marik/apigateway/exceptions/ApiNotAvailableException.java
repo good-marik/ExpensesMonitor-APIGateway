@@ -1,4 +1,4 @@
-package de.marik.apigateway.utils;
+package de.marik.apigateway.exceptions;
 
 public class ApiNotAvailableException extends RuntimeException {
 	public ApiNotAvailableException( ) {

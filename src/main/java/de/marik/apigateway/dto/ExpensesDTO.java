@@ -2,8 +2,6 @@ package de.marik.apigateway.dto;
 
 import java.time.LocalDate;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -22,8 +20,8 @@ public class ExpensesDTO {
 	@PastOrPresent(message = "date cannot be in the future")
 	private LocalDate date;
 
-	@NotEmpty(message = "some information/notice about expenses should be provided")
-	@Size(max = 250, message = "notice should not be longer than 250 symbols")
+	@NotEmpty(message = "some information about expenses should be provided")
+	@Size(max = 100, message = "notice should not be longer than 100 symbols")
 	private String comment;
 
 	private int ownerIdentity;

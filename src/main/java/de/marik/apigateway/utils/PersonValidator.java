@@ -1,4 +1,4 @@
-package de.marik.apigateway.util;
+package de.marik.apigateway.utils;
 
 import java.util.Optional;
 

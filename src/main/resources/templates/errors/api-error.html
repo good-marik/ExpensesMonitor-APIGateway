@@ -2,13 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<title>Unexpected Error</title>
+	<title>API Error</title>
 	<link rel="stylesheet" href="/css/dark.css">
 </head>
 
 <body>
-	<h1>Here an unexpected error has occurred...</h1>
-	<p th:text="${message}"></p>
+	<h2 th:text="${message}"></h2>
+	<hr>
+	<a href="show">return</a>
 </body>
 
 </html>

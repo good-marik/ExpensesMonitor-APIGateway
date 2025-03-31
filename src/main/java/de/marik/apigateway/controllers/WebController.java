@@ -2,8 +2,6 @@ package de.marik.apigateway.controllers;
 
 import java.time.LocalDate;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,24 +11,18 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import de.marik.apigateway.client.ExpensesClient;
 import de.marik.apigateway.dto.ExpensesDTO;
 import de.marik.apigateway.models.Person;
-import de.marik.apigateway.security.PersonDetails;
 import de.marik.apigateway.services.ExpensesService;
 import de.marik.apigateway.services.PersonService;
 import jakarta.validation.Valid;
 
 @Controller
 public class WebController {
-
-	private final ExpensesClient apiServiceClient;
 	private final PersonService personService;
 	private final ExpensesService expensesService;
 
-	public WebController(ExpensesClient apiServiceClient, PersonService personService,
-			ExpensesService expensesService) {
-		this.apiServiceClient = apiServiceClient;
+	public WebController(PersonService personService, ExpensesService expensesService) {
 		this.personService = personService;
 		this.expensesService = expensesService;
 	}
@@ -61,7 +53,8 @@ public class WebController {
 	}
 
 	@PostMapping("/create")
-	public String createExpenses(@ModelAttribute("expenses") @Valid ExpensesDTO expensesDTO, BindingResult bindingResult) {
+	public String createExpenses(@ModelAttribute("expenses") @Valid ExpensesDTO expensesDTO,
+			BindingResult bindingResult) {
 		if (bindingResult.hasErrors())
 			return "expenses/new";
 		expensesService.create(expensesDTO);
@@ -71,10 +64,12 @@ public class WebController {
 	@GetMapping("/edit")
 	public String editExpenses(@RequestParam int id, Model model) {
 		model.addAttribute("expenses", expensesService.getExpensesById(id));
-		System.out.println("Date in expensesDTO: "+ expensesService.getExpensesById(id).getDate());
+		// debugging
+		// System.out.println("Date in expensesDTO: "+
+		// expensesService.getExpensesById(id).getDate());
 		return "expenses/update";
 	}
-	
+
 	@PatchMapping("/update")
 	public String updateExpenses(@ModelAttribute("expenses") @Valid ExpensesDTO expensesDTO,
 			BindingResult bindingResult) {

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import de.marik.apigateway.models.Person;
 import de.marik.apigateway.services.RegistrationService;
-import de.marik.apigateway.util.PersonValidator;
+import de.marik.apigateway.utils.PersonValidator;
 import jakarta.validation.Valid;
 
 @Controller

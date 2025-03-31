@@ -10,24 +10,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import de.marik.apigateway.dto.ExpensesDTO;
 import de.marik.apigateway.dto.ExpensesList;
-import de.marik.apigateway.models.Expenses;
 
-@FeignClient(name = "api-service", url = "http://localhost:8000")
+@FeignClient(name = "api-service", url = "http://localhost:8000/api")
 public interface ExpensesClient {
-	
-	@GetMapping("/api/expenses")
+
+	@GetMapping("/expenses")
 	ResponseEntity<ExpensesList> getExpensesByOwnerId(@RequestParam int ownerId);
 
-	@DeleteMapping("/api/delete")
+	@DeleteMapping("/delete")
 	ResponseEntity<String> deleteExpenses(@RequestParam int id);
-	
-	@PostMapping("/api/create")
-	ResponseEntity<Expenses> addExpenses(@RequestBody ExpensesDTO expensesDTO);
-	
-	@GetMapping("/api/expensesById")
+
+	@PostMapping("/create")
+	ResponseEntity<ExpensesDTO> addExpenses(@RequestBody ExpensesDTO expensesDTO);
+
+	@GetMapping("/expensesById")
 	ResponseEntity<ExpensesDTO> getExpensesById(@RequestParam int id);
-	
-	@PostMapping("/api/update")
-	ResponseEntity<Expenses> updateExpenses(@RequestBody ExpensesDTO expensesDTO);
-	
+
+	@PostMapping("/update")
+	ResponseEntity<ExpensesDTO> updateExpenses(@RequestBody ExpensesDTO expensesDTO);
 }

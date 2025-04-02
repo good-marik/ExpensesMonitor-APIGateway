@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
 	<meta charset="UTF-8">
 	<title>New Entry</title>
@@ -9,37 +10,36 @@
 <body>
 
 	<script>
-    	document.addEventListener("DOMContentLoaded", function() {
-        	let dateField = document.getElementById("date");
-        	if (!dateField.value) {
-            	dateField.value = new Date().toISOString().split('T')[0];
-        	}
-    	});
+		document.addEventListener("DOMContentLoaded", function () {
+			let dateField = document.getElementById("date");
+			if (!dateField.value) {
+				dateField.value = new Date().toISOString().split('T')[0];
+			}
+		});
 	</script>
 
-	<h2>New Expenses:</h2>
+	<h2>New Expenses</h2>
+	<hr>
 
 	<form th:method="POST" th:action="@{/create}" th:object="${expenses}">
-		
-		<label for="amount">Amount: </label> 
+
+		<label for="amount">Amount, EUR: </label>
 		<input type="text" th:field="*{amount}" id="amount" />
 		<div class="error" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></div>
-		<p/>
-		
-		<label for="date">Date: </label> 
-		<input type="date" th:field="*{date}" id="date"/>
+
+		<label for="date">Date: </label>
+		<input type="date" th:field="*{date}" id="date" />
 		<div class="error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
-		<p/> 
-		
-		<label for="comment">Purpose: </label> 
-		<input type="text" th:field="*{comment}" id="comment" /> 
+
+		<label for="comment">Purpose: </label>
+		<input class="input-long" type="text" th:field="*{comment}" id="comment" />
 		<div class="error" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></div>
-		<p/>
-		
+
+		<br>
 		<button>Add expenses!</button>
-		
+
 	</form>
-	
+
 </body>
 
 </html>

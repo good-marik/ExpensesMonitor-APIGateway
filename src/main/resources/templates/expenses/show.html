@@ -6,7 +6,7 @@
 	<link rel="stylesheet" href="/css/dark.css">
 </head>
 <body>
-	<h1 th:text="${person.getName()}"></h1>
+	<h2 th:text="${person.getName()}"></h2>
 	
 	<form th:action="@{/logout}" th:method="POST">
 		<button>logout</button>
@@ -14,26 +14,29 @@
 	
 	<hr>
 	
-	<h2>My Expenses</h2>
+	<h3>My Expenses</h3>
 	
 	<form action="/create"> 
 		<button>add new</button>
 	</form>
+
+	<p></p>
     
     <table>
         <thead>
             <tr>
-                <th>Amount</th>
-                <th>Date</th>
-                <th>Purpose</th>
+                <th class="col1">Amount, EUR</th>
+                <th class="col2">Date</th>
+                <th class="col3">Purpose</th>
+				<th class="col4"></th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="expenses : ${expensesList}">
-                <td th:text="${expenses.amount}"></td>
-                <td th:text="${#temporals.format(expenses.date, 'dd-MM-yyyy')}"></td>
-                <td th:text="${expenses.comment}"></td>
-                <td>
+                <td class="col1" th:text="${#numbers.formatDecimal(expenses.amount, 1, 2)}"></td>
+                <td class="col2" th:text="${#temporals.format(expenses.date, 'dd-MM-yyyy')}"></td>
+                <td class="col3" th:text="${expenses.comment}"></td>
+                <td class="col4">
                 	<form th:method="GET" th:action="@{/edit}">
                 		<input type="hidden" name="id" th:value="${expenses.id}" />
                 		<button type="submit">edit</button>

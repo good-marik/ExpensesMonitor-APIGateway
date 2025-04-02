@@ -1,42 +1,44 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<title>Editing My Expenses</title>
-<link rel="stylesheet" href="/css/dark.css">
+	<meta charset="UTF-8">
+	<title>Editing My Expenses</title>
+	<link rel="stylesheet" href="/css/dark.css">
 </head>
+
 <body>
-	
+	<!--
 	<p>---------------------------</p>
 	<p>Default: <span th:text="${expenses.date}"></span></p>
 	<p>DD/MM/YYYY: <span th:text="${#temporals.format(expenses.date, 'dd/MM/yyyy')}"></span></p>
 	<p>Full Date: <span th:text="${#temporals.format(expenses.date, 'EEEE, dd MMMM yyyy')}"></span></p>
 	<p>---------------------------</p>
-	
-	<h2>Editing Expenses:</h2>
-	
+	-->
+
+	<h2>Edit Expenses</h2>
+	<hr>
+
 	<form th:method="PATCH" th:action="@{/update?id={id}(id=${expenses.id})}" th:object="${expenses}">
-		
-		<label for="amount">Amount: </label> 
+
+		<label for="amount">Amount, EUR: </label>
 		<input type="text" th:field="*{amount}" id="amount" />
 		<div class="error" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></div>
-		<p/>
-		
-		<label for="date">Date: </label> 
-		<input type="text" th:field="*{date}" th:value="${#temporals.format(date, 'yyyy-MM-dd')}" /> 	<!--formatting not working -->
+
+		<label for="date">Date: </label>
+		<input type="text" th:field="*{date}" th:value="${#temporals.format(date, 'yyyy-MM-dd')}" />
+		<!--formatting not working -->
 		<div class="error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
-		<p/> 
-		
-		<label for="comment">Purpose: </label> 
-		<input type="text" th:field="*{comment}" id="comment" /> 
+
+		<label for="comment">Purpose: </label>
+		<input class="input-long" type="text" th:field="*{comment}" id="comment" />
 		<div class="error" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></div>
-		
+
 		<input type="hidden" th:field="*{ownerIdentity}" id="ownerIdentity" />
-		
-		<p/>
-		
+
+		<br>
 		<button>Update expenses!</button>
-		
+
 	</form>
 
 </body>

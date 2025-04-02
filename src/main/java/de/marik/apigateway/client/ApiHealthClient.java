@@ -6,7 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@FeignClient(name = "health-service", url = "http://localhost:8000")
+@FeignClient(name = "health-service", url = "${custom.api.url}")
 public interface ApiHealthClient {
 	
 	@GetMapping("/actuator/health")

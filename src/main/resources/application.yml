@@ -1,6 +1,6 @@
 spring:
   application:
-    name: APIGateway
+    name: Gateway
  
 #Data source configuration
   datasource:
@@ -28,8 +28,9 @@ spring:
     format:
       date: dd/MM/yyyy
 
-#debugging here
-temp:
-    username: ${TEMP_USERNAME}
-    password: ${TEMP_PASSWORD}
+#api service
+custom:
+  api:
+    url: ${API_URL}
+
     

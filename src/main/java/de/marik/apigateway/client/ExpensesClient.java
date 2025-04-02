@@ -12,21 +12,21 @@ import de.marik.apigateway.config.FeignConfig;
 import de.marik.apigateway.dto.ExpensesDTO;
 import de.marik.apigateway.dto.ExpensesList;
 
-@FeignClient(name = "api-service", url = "http://localhost:8000/api", configuration = FeignConfig.class)
+@FeignClient(name = "api-service", url = "${custom.api.url}", configuration = FeignConfig.class)
 public interface ExpensesClient {
 
-	@GetMapping("/expenses")
+	@GetMapping("/api/expenses")
 	ResponseEntity<ExpensesList> getExpensesByOwnerId(@RequestParam int ownerId);
 
-	@DeleteMapping("/delete")
+	@DeleteMapping("/api/delete")
 	ResponseEntity<String> deleteExpenses(@RequestParam int id);
 
-	@PostMapping("/create")
+	@PostMapping("/api/create")
 	ResponseEntity<ExpensesDTO> addExpenses(@RequestBody ExpensesDTO expensesDTO);
 
-	@GetMapping("/expensesById")
+	@GetMapping("/api/expensesById")
 	ResponseEntity<ExpensesDTO> getExpensesById(@RequestParam int id);
 
-	@PostMapping("/update")
+	@PostMapping("/api/update")
 	ResponseEntity<ExpensesDTO> updateExpenses(@RequestBody ExpensesDTO expensesDTO);
 }

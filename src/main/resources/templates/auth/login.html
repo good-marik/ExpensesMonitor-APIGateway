@@ -22,16 +22,18 @@
 			<div th:if="${param.error}" class="error">incorrect username or password</div>
 			<div th:if="${param.error == null}" style="visibility: hidden">dummy</div>
 
-			<div class="button-container">
+			<div class="centering-container">
 				<button type="submit">login!</button>
 			</div>
 	
-			<a class="link-simple" href="/auth/registration">or register here</a>
+			<div class="centering-container">
+				<a class="link-simple" href="/auth/registration">or register here</a>
+			</div>
 		</form>
 	</div>
 
 	<br>
-	<p style="text-align: center;">demo account: username = guest, password = guest</p>
+	<p style="text-align: center">demo account: username = guest, password = guest</p>
 	
 	
 </body>

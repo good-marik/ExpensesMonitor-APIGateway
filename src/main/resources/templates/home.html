@@ -6,6 +6,24 @@
 <link rel="stylesheet" href="/css/dark.css">
 </head>
 <body>
+	
+	<script>
+		// Function to show or hide an image based on its current state
+		function toggleImage(event, imageId) {
+    		event.preventDefault();
+    		const imageContainer = document.getElementById(imageId);
+			
+			// Check if the image is currently displayed
+			if (imageContainer.style.display === "block") {
+				// Hide the image
+				imageContainer.style.display = "none";
+			} else {
+				// Show the image
+				imageContainer.style.display = "block";
+			}
+		}
+	</script>
+	
 	<h1>Welcome to Your Expenses Monitor!</h1>
 
 	<table class="table-main">
@@ -26,10 +44,22 @@
 	<p>This web application is designed to help you to track and monitor your expenses, positively impacting your savings strategies.</p>
 	
 	<p>
-		<span>It follows a microservices architecture, consisting of a gateway, a REST API server, and a database (</span><a class="link-simple" href="/local/path/here.jpg">scheme</a><span>).</span>
+		It follows a microservices architecture, consisting of a gateway, a REST API server, and a database:
+		<a class="link-simple" href="#" onclick="toggleImage(event, 'image-container1')">scheme</a><span>.</span>
 	</p>
 	
-	<p>Technologies used: <i>Java, Spring Boot, Spring Security, Spring Data JPA, PostgreSQL, and Thymeleaf.</i></p>
+	<div id="image-container1" style="display: none; text-align: center; margin-top: 10px;">
+		<img src="/images/architecture2.svg" alt="Architecture Diagram" style="max-width: 80%; height: auto;">
+	</div>
+	
+	<p>
+		Technologies: <i>Java, Spring Boot, Spring Security, Spring Data JPA, PostgreSQL, and Thymeleaf: </i>
+		<a class="link-simple" href="#" onclick="toggleImage(event, 'image-container2')">scheme</a><span>.</span>
+	</p>
+	
+	<div id="image-container2" style="display: none; text-align: center; margin-top: 10px;">
+		<img src="/images/technologies.svg" alt="Architecture Diagram" style="max-width: 100%; height: auto;">
+	</div>
 	
 	<p>The project is written by Marat Khusniyarov for his portfolio.</p>
 

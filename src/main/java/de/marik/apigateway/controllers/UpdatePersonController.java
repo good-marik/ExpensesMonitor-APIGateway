@@ -18,7 +18,7 @@ import jakarta.validation.Valid;
 public class UpdatePersonController {
 	private final PersonService personService;
 	private final PersonValidatorForPasswords personValidatorForPasswords;
-	
+
 	public UpdatePersonController(PersonService personService,
 			PersonValidatorForPasswords personValidatorForPasswords) {
 		this.personService = personService;

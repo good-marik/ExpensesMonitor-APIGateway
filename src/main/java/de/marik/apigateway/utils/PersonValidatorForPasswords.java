@@ -20,5 +20,9 @@ public class PersonValidatorForPasswords implements Validator {
 		if(!person.getPassword().equals(person.getPasswordRepeat())) {
 			errors.rejectValue("password", "", "Passwords do not match!");
 		}
+		if(person.getUsername().equals("guest")) {
+			errors.rejectValue("username", "", "The demo account cannot be modified. Please, create a new account");
+		}
+		
 	}
 }

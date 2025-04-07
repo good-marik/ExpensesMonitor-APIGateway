@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.marik.apigateway.models.Person;
 import de.marik.apigateway.repositories.PersonRepository;
@@ -30,6 +31,7 @@ public class PersonService {
 		return ((PersonDetails) authentication.getPrincipal()).getPerson();
 	}
 	
+	@Transactional
 	public void updatePerson(Person person) {
 		Person personToUpdate = getAuthentPerson();
 		personToUpdate.setName(person.getName());

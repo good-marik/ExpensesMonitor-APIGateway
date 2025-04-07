@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Update Profile</title>
+	<link rel="stylesheet" href="/css/dark.css">
+</head>
+
+<body>
+
+	<h2>Update Your Profile</h2>
+
+	<hr>
+	
+		<form class="form-registration" th:method="PATCH" th:action="@{/person/update}" th:object="${person}">
+
+		<label for="name">name: </label>
+		<input type="text" th:field="*{name}" id="name" />
+		<div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+
+		<label for="username">username: </label>
+		<input class="input-noneditable" type="text" th:field="*{username}" id="username" disabled/>
+
+		<label for="password">password: </label>
+		<input type="password" th:field="*{password}" id="password" />
+		<div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+
+		<label for="passwordRepeat">repeat password: </label>
+		<input type="password" th:field="*{passwordRepeat}" id="passwordRepeat" />
+
+		<br>
+		<button>update account!</button>
+		<br>
+
+	</form>
+	
+</body>
+
+</html>

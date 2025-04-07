@@ -76,5 +76,13 @@ public class Person {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	//TODO: to delete! for debuggin only!
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", username=" + username + ", password=" + password + ", name=" + name
+				+ ", passwordRepeat=" + passwordRepeat + "]";
+	}
+	
 	
 }

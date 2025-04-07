@@ -8,6 +8,10 @@
 <body>
 	<h2 th:text="${person.getName()}"></h2>
 	
+	<form th:action="@{/person/edit}" th:method="GET">
+		<button>update profile</button>
+	</form>
+	
 	<form th:action="@{/logout}" th:method="POST">
 		<button>logout</button>
 	</form>

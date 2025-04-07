@@ -22,6 +22,7 @@ public class WebController {
 	private final PersonService personService;
 	private final ExpensesService expensesService;
 
+	//TODO to rename to ExpensesController
 	public WebController(PersonService personService, ExpensesService expensesService) {
 		this.personService = personService;
 		this.expensesService = expensesService;

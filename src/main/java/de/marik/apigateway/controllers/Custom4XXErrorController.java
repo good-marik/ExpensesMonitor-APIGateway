@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
-public class Custom404ErrorController implements ErrorController {
-	
+public class Custom4XXErrorController implements ErrorController {
+
 	// catching NOT FOUND and BAD REQUEST local errors
 	@GetMapping("/error")
 	public String handleError(HttpServletRequest request) {
-        return "errors/general-error";
+		return "errors/general-error";
 	}
 }

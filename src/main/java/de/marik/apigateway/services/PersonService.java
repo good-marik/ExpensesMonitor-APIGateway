@@ -26,14 +26,14 @@ public class PersonService {
 		return personRepository.findByUsername(username);
 	}
 	
-	public Person getAuthentPerson() {
+	public Person getAuthenticatedPerson() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		return ((PersonDetails) authentication.getPrincipal()).getPerson();
 	}
 	
 	@Transactional
 	public void updatePerson(Person person) {
-		Person personToUpdate = getAuthentPerson();
+		Person personToUpdate = getAuthenticatedPerson();
 		personToUpdate.setName(person.getName());
 		personToUpdate.setPassword(passwordEncoder.encode(person.getPassword()));
 		personRepository.save(personToUpdate);

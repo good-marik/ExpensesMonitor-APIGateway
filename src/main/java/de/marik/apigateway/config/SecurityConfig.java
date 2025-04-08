@@ -23,18 +23,16 @@ public class SecurityConfig {
 	}
 	
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests(auth -> auth
-			.requestMatchers("/", "/home", "/auth/login", "/error", "/auth/registration",
+			.requestMatchers("/", "/home", "/error", "/auth/registration",
 						"/css/dark.css", "/images/architecture2.svg", "/images/technologies.svg").permitAll()
 			.anyRequest().authenticated())
-//			.formLogin(withDefaults())
 			.formLogin(login -> login.loginPage("/auth/login")
 				.loginProcessingUrl("/process_login")
 				.defaultSuccessUrl("/show", true)
-				.failureUrl("/auth/login?error"))
-//			.httpBasic(withDefaults())
-//			.csrf(csrf -> csrf.disable())
+				.failureUrl("/auth/login?error")
+				.permitAll())
 	        .logout(out -> out.logoutUrl("/logout")
 	        	.logoutSuccessUrl("/auth/login"));
 		return http.build();
@@ -43,9 +41,10 @@ public class SecurityConfig {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(personDetailsService).passwordEncoder(getPasswordEncoder());
 	}
-
+	
+	//encoder for passwords
 	@Bean
-	public PasswordEncoder getPasswordEncoder() {
+	PasswordEncoder getPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 

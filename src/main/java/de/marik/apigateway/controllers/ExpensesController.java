@@ -17,25 +17,20 @@ import de.marik.apigateway.services.ExpensesService;
 import de.marik.apigateway.services.PersonService;
 import jakarta.validation.Valid;
 
+// Main controller to operate with Expenses
 @Controller
-public class WebController {
+public class ExpensesController {
 	private final PersonService personService;
 	private final ExpensesService expensesService;
 
-	//TODO to rename to ExpensesController
-	public WebController(PersonService personService, ExpensesService expensesService) {
+	public ExpensesController(PersonService personService, ExpensesService expensesService) {
 		this.personService = personService;
 		this.expensesService = expensesService;
 	}
 
-	@GetMapping({ "/", "/home" })
-	public String getHome() {
-		return "home";
-	}
-
 	@GetMapping("/show")
 	public String fetchExpenses(Model model) {
-		Person person = personService.getAuthentPerson();
+		Person person = personService.getAuthenticatedPerson();
 		model.addAttribute("person", person);
 		model.addAttribute("expensesList", expensesService.getExpensesList(person));
 		return "expenses/show";
@@ -65,19 +60,16 @@ public class WebController {
 	@GetMapping("/edit")
 	public String editExpenses(@RequestParam int id, Model model) {
 		model.addAttribute("expenses", expensesService.getExpensesById(id));
-		// debugging
-		// System.out.println("Date in expensesDTO: "+
-		// expensesService.getExpensesById(id).getDate());
 		return "expenses/update";
 	}
 
 	@PatchMapping("/update")
 	public String updateExpenses(@ModelAttribute("expenses") @Valid ExpensesDTO expensesDTO,
 			BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
+		if (bindingResult.hasErrors())
 			return "expenses/update";
-		}
 		expensesService.update(expensesDTO);
 		return "redirect:/show";
 	}
+
 }

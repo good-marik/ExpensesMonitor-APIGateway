@@ -1,6 +1,5 @@
 package de.marik.apigateway.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,11 +15,9 @@ import jakarta.validation.Valid;
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
-
 	private final PersonValidator personValidator;
 	private final RegistrationService registrationService;
 
-	@Autowired
 	public AuthController(PersonValidator personValidator, RegistrationService registrationService) {
 		this.personValidator = personValidator;
 		this.registrationService = registrationService;
@@ -32,18 +29,17 @@ public class AuthController {
 	}
 
 	@GetMapping("/registration")
-	public String registrationPage(@ModelAttribute("person") Person person) {
+	public String registrationPage(@ModelAttribute Person person) {
 		return "auth/registration";
 	}
 
 	@PostMapping("/registration")
-	public String performResistration(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult) {
+	public String performResistration(@ModelAttribute @Valid Person person, BindingResult bindingResult) {
 		personValidator.validate(person, bindingResult);
-
 		if (bindingResult.hasErrors())
 			return "auth/registration";
-
 		registrationService.register(person);
 		return "redirect:/auth/login";
 	}
+	
 }

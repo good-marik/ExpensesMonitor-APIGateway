@@ -39,7 +39,7 @@ public class AuthController {
 		if (bindingResult.hasErrors())
 			return "auth/registration";
 		registrationService.register(person);
-		return "redirect:/auth/login";
+		return "auth/registrationSuccessful";
 	}
-	
+
 }
